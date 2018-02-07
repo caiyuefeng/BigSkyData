@@ -1,4 +1,4 @@
-package com.sky.excel.bean.local;
+package com.sky.data.bean.local;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

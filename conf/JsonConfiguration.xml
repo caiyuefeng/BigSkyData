@@ -1,0 +1,22 @@
+<Json>
+    <field>
+        <!-- 输出信息 -->
+        <output>
+            <!-- 输出名 -->
+            <name>name</name>
+            <!-- 输出类型 -->
+            <storeType>string</storeType>
+        </output>
+        <!-- 输入字段信息组 -->
+        <inputList>
+            <!-- 原始字段信息 -->
+            <input>
+                <!-- 键名 -->
+                <name>姓名</name>
+                <!--存储类型 string,object,list 默认string-->
+                <storeType>string</storeType>
+            </input>
+        </inputList>
+    </field>
+
+</Json>

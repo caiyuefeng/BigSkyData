@@ -1,4 +1,4 @@
-package com.sky.excel.utils;
+package com.sky.data.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +51,7 @@ public class ExcelUtils {
 
 
 
-    public static void parse(String JsonData){
+    public static void parse(String jsonData){
 
 
 

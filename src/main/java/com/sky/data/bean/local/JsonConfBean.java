@@ -1,8 +1,8 @@
-package com.sky.excel.bean.local;
+package com.sky.data.bean.local;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sky.excel.utils.GsonUtils;
+import com.sky.data.utils.GsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
+import java.io.InputStream;
 
 /**
  * @Author: 蔡月峰
@@ -48,6 +49,17 @@ public class JsonConfBean {
             JAXBContext context = JAXBContext.newInstance(JsonConfBean.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             return (JsonConfBean) unmarshaller.unmarshal(new File(xmlPath));
+        } catch (JAXBException e) {
+            LOG.error("xml 文件解析失败 !", e);
+            return null;
+        }
+    }
+
+    public static JsonConfBean valueOf(InputStream in){
+        try {
+            JAXBContext context = JAXBContext.newInstance(JsonConfBean.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            return (JsonConfBean) unmarshaller.unmarshal(in);
         } catch (JAXBException e) {
             LOG.error("xml 文件解析失败 !", e);
             return null;
