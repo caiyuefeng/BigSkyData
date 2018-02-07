@@ -3,20 +3,48 @@
         <!-- 输出信息 -->
         <output>
             <!-- 输出名 -->
-            <name>name</name>
+            <name>设备名称</name>
             <!-- 输出类型 -->
-            <storeType>string</storeType>
+            <storeType>array</storeType>
         </output>
         <!-- 输入字段信息组 -->
         <inputList>
             <!-- 原始字段信息 -->
             <input>
                 <!-- 键名 -->
-                <name>姓名</name>
+                <name>car.code</name>
                 <!--存储类型 string,object,list 默认string-->
+                <storeType>string</storeType>
+            </input>
+            <input>
+                <name>phone.code</name>
                 <storeType>string</storeType>
             </input>
         </inputList>
     </field>
 
+    <field>
+        <output>
+            <name>汽车颜色</name>
+            <storeType>string</storeType>
+        </output>
+        <inputList>
+            <input>
+                <name>car.color</name>
+                <storeType>string</storeType>
+            </input>
+        </inputList>
+    </field>
+    <field>
+        <output>
+            <name>手机颜色</name>
+            <storeType>string</storeType>
+        </output>
+        <inputList>
+            <input>
+                <name>phone.color</name>
+                <storeType>string</storeType>
+            </input>
+        </inputList>
+    </field>
 </Json>
