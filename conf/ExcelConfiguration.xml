@@ -1,0 +1,40 @@
+<excel>
+    <!-- 字段配置信息 -->
+    <field>
+        <!-- 字段KEY -->
+        <keyName>name</keyName>
+        <!-- 字段KEY 所在列名 -->
+        <keyColName>姓名</keyColName>
+        <!-- 字段在Excel中展示的名称 -->
+        <keyOutputName>姓名</keyOutputName>
+        <!-- 字段 KEY 所占列数 -->
+        <keyCols>2</keyCols>
+        <!-- 字段 KEY 所占行数 -->
+        <keyRows>2</keyRows>
+        <!-- 字段VALUE 所在列名 -->
+        <valueColName>姓名</valueColName>
+        <!-- 字段VALUE 所占列数 -->
+        <valueCols>2</valueCols>
+        <!-- 字段VALUE 所占行数 -->
+        <valueRows>2</valueRows>
+        <!-- 固定起始列 -->
+        <col></col>
+        <!-- 固定起始行 -->
+        <row></row>
+
+        <!-- 该字段是否重启一行 -->
+        <isNewRow></isNewRow>
+
+        <isMultiCol></isMultiCol>
+    </field>
+    <field>
+        <name>年龄</name>
+    </field>
+    <field>
+        <name>姓名</name>
+        <colName></colName>
+    </field>
+    <field>
+        <name>年龄</name>
+    </field>
+</excel>

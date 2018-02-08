@@ -3,7 +3,7 @@ package com.sky.data.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sky.data.bean.local.JsonConfBean;
+import com.sky.data.bean.parse.JsonConfBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +46,13 @@ public class ParseUtils {
     private static String INPUT_ANALYSIS_FLAG = "0";
 
     public static void main(String[] args) {
-        System.out.println(ParseUtils.parse("{\"car\":{\"code\":\"奥迪\",\"color\":\"黑色\"},\"phone\":{\"code\":\"华为\",\"color\":\"白色\"}}","1"));
+        System.out.println(ParseUtils.parse("{\"car\":{\"code\":\"奥迪\",\"color\":\"黑色\"},\"phone\":{\"code\":\"华为\",\"color\":\"白色\"}}", "1"));
+    }
+
+    /**
+     * 私有构造函数, 防止该类被实例化
+     */
+    private ParseUtils() {
     }
 
     /**
@@ -131,9 +137,9 @@ public class ParseUtils {
             }
 
             if (jsonElement.isJsonObject()) {
-                if(INPUT_ANALYSIS_FLAG.equals(COMPLEX_ANALYSIS_FLAG)) {
-                    analysisObject(key,jsonElement.getAsJsonObject());
-                }else {
+                if (INPUT_ANALYSIS_FLAG.equals(COMPLEX_ANALYSIS_FLAG)) {
+                    analysisObject(key, jsonElement.getAsJsonObject());
+                } else {
                     analysisObject(jsonElement.getAsJsonObject());
                 }
             } else if (jsonElement.isJsonArray()) {

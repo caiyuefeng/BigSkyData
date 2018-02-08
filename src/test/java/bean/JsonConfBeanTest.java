@@ -1,7 +1,6 @@
 package bean;
 
-import com.sky.data.bean.local.JsonConfBean;
-import com.sky.data.utils.ParseUtils;
+import com.sky.data.bean.parse.JsonConfBean;
 import org.junit.Before;
 import org.junit.Test;
 
