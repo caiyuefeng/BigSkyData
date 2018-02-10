@@ -1,7 +1,12 @@
 package com.sky.data.utils;
 
+import com.sky.data.bean.excel.ExcelConfBean;
+import com.sky.data.bean.excel.FieldBean;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +33,20 @@ public class ExcelUtils {
     private static final String EXCEL_XML_PATH = "./conf/Excel.xml";
 
     /**
+     * Excel配置信息
+     */
+    private static final ExcelConfBean excelConfBean = new ExcelConfBean();
+
+    /**
      * 工作簿实例
      * 一次解析只会存在一个工作簿实例
      */
     private static final HSSFWorkbook WORKBOOK = new HSSFWorkbook();
 
+    /**
+     * 表头所在行索引
+     */
+    private static final int HEAD_ROW_INDEX = 1;
 
     /**
      * 私有构造函数，保证该类不会被新建对象
@@ -67,7 +81,7 @@ public class ExcelUtils {
      *
      * @return HSSFSheet 工作表实例
      */
-    public HSSFSheet getSheet() {
+    private static HSSFSheet getSheet() {
         return WORKBOOK.getSheet("sheet1");
     }
 
@@ -78,26 +92,110 @@ public class ExcelUtils {
      * @param sheetName 表名
      * @return HSSFSheet 工作表实例
      */
-    public HSSFSheet getSheet(String sheetName) {
+    private static HSSFSheet getSheet(String sheetName) {
         return WORKBOOK.getSheet(sheetName);
     }
 
-    public static void createWorkBook() {
+    public static void parse(String jsonData) {
 
+        HSSFSheet sheet = getSheet();
 
+        Map<String, String> jsonMap = GsonUtils.parseMap(jsonData);
+
+        for (Map.Entry<String, String> entry : jsonMap.entrySet()) {
+
+            // 输出单元格
+            if (excelConfBean.getFieldBeanMap().containsKey(entry.getKey())) {
+                createCell(sheet,
+                        excelConfBean.getFieldBeanMap().get(entry.getKey()),
+                        entry.getValue());
+            }
+        }
     }
 
+    private static void createCell(HSSFSheet sheet, FieldBean fieldBean, String value) {
 
+        int currentColIndex = 1;
+        int headColIndex = 1;
 
-    public static void parse(String jsonData) {
-        Map<String,String> jsonMap = GsonUtils.parseMap(jsonData);
+        // 生成 KEY Value 所在列名
+        createHead(sheet, fieldBean);
 
-        for(Map.Entry<String,String> entry : jsonMap.entrySet()){
-
-
+        // 生成 KEY 单元格
+        if (StringUtils.isEmpty(fieldBean.getKeyOutputName())) {
+            createKeyCell();
         }
 
+        // 生成VALUE 单元格
+        createValueCell();
     }
 
+    private static void createValueCell() {
+    }
 
+    private static void createKeyCell() {
+    }
+
+    private static void createHead(HSSFSheet sheet, FieldBean fieldBean) {
+
+        int headColIndex = 1;
+        // 生成 KEY 所在列名
+        if (!StringUtils.isEmpty(fieldBean.getKeyColName())) {
+            int occupyCol = headColIndex;
+            if (!StringUtils.isEmpty(fieldBean.getCol())) {
+                occupyCol = Integer.valueOf(fieldBean.getCol());
+            }
+
+            // 生成表头
+            createHead(sheet, fieldBean.getKeyColName(), occupyCol);
+            headColIndex = occupyCol + 1;
+            // 合并单元格
+            if (!StringUtils.isEmpty(fieldBean.getKeyCols())) {
+                CellRangeAddress cra = new CellRangeAddress(1, 1,
+                        occupyCol, occupyCol + Integer.valueOf(fieldBean.getKeyCols()));
+                sheet.addMergedRegion(cra);
+                headColIndex--;
+                headColIndex += Integer.valueOf(fieldBean.getKeyCols());
+            }
+        }
+
+        // 生成 VALUE 所在列名
+        if (!StringUtils.isEmpty(fieldBean.getValueColName())) {
+
+            int occupyCol = headColIndex;
+
+            if (!StringUtils.isEmpty(fieldBean.getCol())) {
+                occupyCol = Integer.valueOf(fieldBean.getCol());
+            }
+
+            // 生成表头
+            createHead(sheet, fieldBean.getKeyColName(), occupyCol);
+
+            // 合并单元格
+            if (!StringUtils.isEmpty(fieldBean.getKeyCols())) {
+                mergeCell(sheet, 1, 1,
+                        occupyCol, occupyCol + Integer.valueOf(fieldBean.getKeyCols()));
+            }
+        }
+    }
+
+    /**
+     * 生成表头
+     *
+     * @param sheet    表
+     * @param headName 表头名
+     * @param colIndex 表头所在列索引
+     */
+    private static void createHead(HSSFSheet sheet, String headName, int colIndex) {
+        Row row = sheet.getRow(HEAD_ROW_INDEX);
+        if (row.getCell(colIndex) == null) {
+            Cell cell = row.createCell(colIndex);
+            cell.setCellValue(headName);
+        }
+    }
+
+    private static void mergeCell(HSSFSheet sheet, int startRow, int endRow, int startCol, int endCol) {
+        CellRangeAddress cra = new CellRangeAddress(startRow, endRow, startCol, endCol);
+        sheet.addMergedRegion(cra);
+    }
 }

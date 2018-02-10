@@ -20,6 +20,12 @@ public class GsonUtils {
     private final static Gson GSON = new GsonBuilder().enableComplexMapKeySerialization().create();
 
     /**
+     * 私有构造函数, 防止该类被实例化
+     */
+    private GsonUtils() {
+    }
+
+    /**
      * 将Json数据解析成Map
      *
      * @param value 带解析数据
