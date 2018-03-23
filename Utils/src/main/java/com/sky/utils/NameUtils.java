@@ -1,3 +1,9 @@
+package com.sky.utils;
+
+import com.sky.common.Parameter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,69 +13,110 @@ import java.util.Random;
 /**
  * @Author: 蔡月峰
  * @Description: 随机生成姓名
- *
  * 掉用方法 create() 即可 随机输出一个姓名
- *
  * @Date : Create in 20:07 2018/2/19
  * @Modified By:
  */
+@SuppressWarnings({"unused", "JavaDoc"})
 public class NameUtils {
+
+    private static final Logger LOG = LoggerFactory.getLogger(NameUtils.class);
 
     /**
      * 姓氏数组缓存
      */
-    private static List<String> surnameList = new ArrayList<String>();
+    private static final List<String> SURNAME_LIST = new ArrayList<String>();
 
+    /**
+     * 字符串拼接器
+     */
     private static StringBuilder builder = new StringBuilder();
+
+    /**
+     * 随机数
+     */
     private static Random random = new Random();
+
     static {
         try {
-            loadSurname("./Utils/conf/百家姓.txt");
+            loadSurname();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
+     * 私有构造函数,防止实例化
+     */
+    private NameUtils() {
+
+    }
+
+    /**
      * 载入百家姓字典
-     * @param file 字典文件
+     *
      * @throws IOException
      */
-    private static void loadSurname(String file) throws IOException {
-        FileReader reader = new FileReader(new File(file));
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String line ;
-        while((line = bufferedReader.readLine())!= null ){
-            String[] strings = line.split("\t");
-            surnameList.addAll(Arrays.asList(strings));
+    private static void loadSurname() throws IOException {
+        InputStream inputStream = null;
+        Reader reader = null;
+        BufferedReader bufferedReader = null;
+        String line;
+        // 加载姓氏字典
+        try {
+            inputStream = NameUtils.class.getClassLoader().getResourceAsStream("surname.txt");
+            reader = new InputStreamReader(inputStream);
+            bufferedReader = new BufferedReader(reader);
+            // 读取数据解析资源
+            while ((line = bufferedReader.readLine()) != null) {
+                String[] strings = line.split(Parameter.BCP_SEPARATOR, -1);
+                SURNAME_LIST.addAll(Arrays.asList(strings));
+            }
+        } catch (Exception e) {
+            LOG.error("Cannot load surname.txt !");
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+
+            if (reader != null) {
+                reader.close();
+            }
+
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
     }
 
     /**
      * 随机生成姓氏
+     *
      * @return 姓氏
      */
-    private static String createSurname(){
-        return surnameList.get(random.nextInt(488));
+    private static String createSurname() {
+        return SURNAME_LIST.get(random.nextInt(488));
     }
 
     /**
      * 随机生成名称
+     *
      * @return 名称
      * @throws UnsupportedEncodingException
      */
     private static String createName() throws UnsupportedEncodingException {
-        int high = 176+Math.abs(random.nextInt(39));
+        int high = 176 + Math.abs(random.nextInt(39));
         int low = 139 + Math.abs(random.nextInt(93));
         byte[] bytes = new byte[2];
         bytes[0] = Integer.valueOf(high).byteValue();
         bytes[1] = Integer.valueOf(low).byteValue();
-        String value = new String(bytes,"GBK");
-        return new String(getUTF8BytesFromGBKString(value),"UTF-8");
+        String value = new String(bytes, "GBK");
+        return new String(getUTF8BytesFromGBKString(value), "UTF-8");
     }
 
     /**
      * GBK 转为 UTF-8 编码
+     *
      * @param gbkStr GBK字符串
      * @return UTF-8字符串
      */
@@ -79,7 +126,7 @@ public class NameUtils {
         int k = 0;
         for (int i = 0; i < n; i++) {
             int m = gbkStr.charAt(i);
-            if (m < 128 && m >= 0) {
+            if (m < 128) {
                 utfBytes[k++] = (byte) m;
                 continue;
             }
@@ -97,22 +144,18 @@ public class NameUtils {
 
     /**
      * 随机生成姓名
+     *
      * @return 姓名
-     * @throws UnsupportedEncodingException
+     * @throws  UnsupportedEncodingException
      */
     public static String create() throws UnsupportedEncodingException {
         builder.setLength(0);
         builder.append(createSurname());
-        int randomInt = random.nextInt()%2;
-        if(randomInt==0) {
+        int randomInt = random.nextInt() % 2;
+        if (randomInt == 0) {
             builder.append(createName());
         }
         builder.append(createName());
         return builder.toString();
-    }
-
-
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        System.out.println(create());
     }
 }

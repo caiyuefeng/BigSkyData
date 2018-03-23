@@ -35,7 +35,7 @@ public class ExcelUtils {
     /**
      * Excel配置信息
      */
-    private static final ExcelConfBean excelConfBean = new ExcelConfBean();
+    private static final ExcelConfBean EXCEL_CONF_BEAN = new ExcelConfBean();
 
     /**
      * 工作簿实例
@@ -105,9 +105,9 @@ public class ExcelUtils {
         for (Map.Entry<String, String> entry : jsonMap.entrySet()) {
 
             // 输出单元格
-            if (excelConfBean.getFieldBeanMap().containsKey(entry.getKey())) {
+            if (EXCEL_CONF_BEAN.getFieldBeanMap().containsKey(entry.getKey())) {
                 createCell(sheet,
-                        excelConfBean.getFieldBeanMap().get(entry.getKey()),
+                        EXCEL_CONF_BEAN.getFieldBeanMap().get(entry.getKey()),
                         entry.getValue());
             }
         }
