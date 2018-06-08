@@ -8,6 +8,10 @@ package com.sky.data.utils;
  */
 public class StringUtils {
 
+    public static StringUtils getInstance() {
+        return new StringUtils();
+    }
+
     /**
      * 私有构造函数, 防止该类被实例化
      */
