@@ -3,7 +3,7 @@ package com.sky.data.handle.common;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sky.bean.parse.JsonConfBean;
+import com.sky.data.handle.bean.parse.JsonConfBean;
 
 import java.util.ArrayList;
 import java.util.HashMap;

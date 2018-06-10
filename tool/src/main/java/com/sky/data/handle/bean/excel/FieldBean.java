@@ -1,4 +1,4 @@
-package com.sky.data.bean.excel;
+package com.sky.data.handle.bean.excel;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

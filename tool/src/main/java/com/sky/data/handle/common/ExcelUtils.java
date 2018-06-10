@@ -1,7 +1,7 @@
 package com.sky.data.handle.common;
 
-import com.sky.bean.excel.ExcelConfBean;
-import com.sky.bean.excel.FieldBean;
+import com.sky.data.handle.bean.excel.ExcelConfBean;
+import com.sky.data.handle.bean.excel.FieldBean;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;

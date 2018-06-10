@@ -7,11 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="BigData" />
-        <module name="Utils" />
+        <module name="task" />
+        <module name="tool" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="BigData" target="1.7" />
+      <module name="task" target="1.5" />
+      <module name="tool" target="1.7" />
       <module name="Utils" target="1.5" />
     </bytecodeTargetLevel>
   </component>

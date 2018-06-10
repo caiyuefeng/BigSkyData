@@ -1,4 +1,4 @@
-package com.sky.data.bean.excel;
+package com.sky.data.handle.bean.excel;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
