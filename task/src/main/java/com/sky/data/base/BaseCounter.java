@@ -7,6 +7,7 @@ package com.sky.data.base;
  * @Modified By:
  */
 public interface BaseCounter {
+
      String MAP_GROUP = "MAP";
 
      String INPUT = "INPUT";
