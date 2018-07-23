@@ -7,7 +7,7 @@ import java.io.IOException;
 
 /**
  * @Author: 蔡月峰
- * @Description: hadoop map 基类
+ * @Description: hadoop map 基类接口
  * @Date : Create in 22:33 2018/3/23
  * @Modified By:
  */
