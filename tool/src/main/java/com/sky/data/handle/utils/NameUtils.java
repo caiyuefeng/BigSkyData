@@ -1,6 +1,6 @@
-package com.sky.data.handle.common;
+package com.sky.data.handle.utils;
 
-import com.sky.data.common.Parameter;
+import com.sky.data.handle.common.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,7 @@ import java.util.Random;
  * @Modified By:
  */
 @SuppressWarnings({"unused", "JavaDoc"})
-public class NameUtils {
+public class NameUtils implements Parameter{
 
     private static final Logger LOG = LoggerFactory.getLogger(NameUtils.class);
 
@@ -69,7 +69,7 @@ public class NameUtils {
             bufferedReader = new BufferedReader(reader);
             // 读取数据解析资源
             while ((line = bufferedReader.readLine()) != null) {
-                String[] strings = line.split(Parameter.BCP_SEPARATOR, -1);
+                String[] strings = line.split(BCP, -1);
                 SURNAME_LIST.addAll(Arrays.asList(strings));
             }
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.sky.data.handle.common;
+package com.sky.data.handle.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

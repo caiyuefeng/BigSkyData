@@ -1,7 +1,5 @@
 package com.sky.data.handle.reflect;
 
-import com.sky.bean.parse.InputBean;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -28,13 +26,6 @@ public class reflectUtils {
         Class reflectClass = Class.forName(className);
         return getClassMethod(reflectClass, methodName, parameter);
     }
-
-    public static void main(String[] args) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException {
-        InputBean fieldBean = new InputBean();
-        setter(fieldBean, "name", "cyf");
-        System.out.println(getter(fieldBean, "name"));
-    }
-
 
     public static Object getter(Object beanObject, String field) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         String method = "get" + init(field);
