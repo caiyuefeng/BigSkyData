@@ -2,6 +2,8 @@ package com.sky.data.handler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author : 蔡月峰
@@ -9,22 +11,29 @@ import java.lang.reflect.Method;
  * @Description: 动态代理类
  * @date : 2018/7/26 15:10
  **/
-public class UDFInvocationHandler implements InvocationHandler{
+public class UDFInvocationHandler extends UDFAbstractHandler{
 
-    /**
-     * 函数实例
-     */
-    private Object object ;
+    @Override
+    public void startUp() {
+        System.out.println("开始调用");
+    }
 
-    public UDFInvocationHandler(Object o){
-        object = o;
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+
+        Map<String,String> map = (HashMap)Class.forName("java.util.HashMap").newInstance();
+        System.out.println(map.put("1","1"));
+        String a = "aa";
+        String b=  "a"+new String("a");
+        System.out.print(a==b);
+        System.out.print("\t"+a.equals(b));
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        System.out.println("开始调用");
-        Object result =  method.invoke(object,args);
-        System.out.println("结束调用");
-        return result;
+    public void endUp() {
+        super.endUp();
+    }
+
+    public UDFInvocationHandler(Object o) {
+        super(o);
     }
 }

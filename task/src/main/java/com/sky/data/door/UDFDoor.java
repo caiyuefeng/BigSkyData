@@ -10,7 +10,7 @@ import java.lang.reflect.Proxy;
 /**
  * @author : 蔡月峰
  * @version : 1.0
- * @Description:
+ * @Description: UDF门面类
  * @date : 2018/7/26 16:08
  **/
 public class UDFDoor {
@@ -23,8 +23,7 @@ public class UDFDoor {
 
     private String execute(String... parameter){
         InvocationHandler handler = new UDFInvocationHandler(udf);
-        UDF baseFunction1 = (UDF) Proxy.newProxyInstance(udf.getClass().getClassLoader(),udf.getClass().getInterfaces(),handler);
-        return baseFunction1.evaluate(parameter);
+        return ((UDF) Proxy.newProxyInstance(udf.getClass().getClassLoader(),udf.getClass().getInterfaces(),handler)).evaluate(parameter);
     }
 
     public static void main(String[] args) {
