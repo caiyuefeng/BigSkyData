@@ -14,6 +14,6 @@ public class UDFInvocationHandlerTest {
         CheckTimeFunction checkTimeFunction = new CheckTimeFunction();
         InvocationHandler handler = new UDFInvocationHandler(checkTimeFunction);
         UDF function = (UDF) Proxy.newProxyInstance(checkTimeFunction.getClass().getClassLoader(),checkTimeFunction.getClass().getInterfaces(),handler);
-        function.evaluate("201807160000000");
+        System.out.println(function.evaluate("201807160000000"));
     }
 }
