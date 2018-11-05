@@ -472,13 +472,15 @@ public class SkyStringUtils {
         square_to_cube = new int[81];
         // Initialize all helping data structures
         // All digits are initially all available (marked by 1) in all rows/columns/cubes
-        for (int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++) {
             row_bitmap[i] = col_bitmap[i] = cube_bitmap[i] = ALL_ONES;
+        }
         // Sequence stores all SQUARE indices of all cells, with 0..start-1 being all filled cells, and the rest all empty
         // All cells initially all empty
-        for (int i = 0; i < 81; i++)
+        for (int i = 0; i < 81; i++) {
             sequence[i] = i;
-        for (int i = 0; i < 9; i++)
+        }
+        for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 // Mapping from SQUARE to I/J is also beneficial: avoid calculating I/J from SQUARE later
                 int square = i * 9 + j;
@@ -486,9 +488,10 @@ public class SkyStringUtils {
                 square_to_col[square] = j;
                 square_to_cube[square] = (i / 3) * 3 + j / 3;
             }
+        }
         // Fill in the given cells. Update the bitmaps at the same time
-        for (int i = 0; i < 9; i++)
-            for (int j = 0; j < 9; j++)
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
                 if (board[i][j] != '.') {
                     int square = i * 9 + j, val = board[i][j] - '0', valbit = 1 << val;
                     row_bitmap[i] &= ~valbit;
@@ -497,10 +500,13 @@ public class SkyStringUtils {
                     entry[square] = valbit;
                     int seq_iter = seq_start;
                     // Compact non-empty cells to the front, and use SEQ_START to mark the first empty cell's position
-                    while (seq_iter < 81 && sequence[seq_iter] != square)
+                    while (seq_iter < 81 && sequence[seq_iter] != square) {
                         seq_iter++;
+                    }
                     swapSeq(seq_start++, seq_iter);
                 }
+            }
+        }
         // main solver process
         boolean success = place(seq_start);
         assert success : "Unsolvable Puzzle!";
@@ -512,8 +518,9 @@ public class SkyStringUtils {
     }
 
     boolean place(int seq_pos) {
-        if (seq_pos >= 81)
+        if (seq_pos >= 81) {
             return true;
+        }
         int seq_next = nextPos(seq_pos);
         swapSeq(seq_pos, seq_next);
         int square = sequence[seq_pos], row_idx = square_to_row[square], col_idx = square_to_col[square], cube_idx = square_to_cube[square];
@@ -528,8 +535,9 @@ public class SkyStringUtils {
             col_bitmap[col_idx] &= ~next_digit_bit;
             cube_bitmap[cube_idx] &= ~next_digit_bit;
 
-            if (place(seq_pos + 1))
+            if (place(seq_pos + 1)) {
                 return true;
+            }
 
             // undo claims in the bitmaps
             row_bitmap[row_idx] |= next_digit_bit;

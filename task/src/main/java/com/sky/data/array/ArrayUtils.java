@@ -27,44 +27,44 @@ public class ArrayUtils {
         if (m > n) {
             return medianNumber(second, first);
         }
-        double max = second[0];
-        double min = second[second.length - 1];
+        double max;
+        double min;
         // 数组一的左元素
-        double L_F = 0.0;
+        double lF = 0.0;
         // 数组一的右元素
-        double L_S = 0.0;
+        double lS = 0.0;
         // 数组二的左元素
-        double R_F = 0.0;
+        double rF = 0.0;
         // 数组二的右元素
-        double R_S = 0.0;
+        double rS = 0.0;
         // 数组一的"割"
-        int F_C = 0;
+        int fC;
         // 数组二的"割"
-        int S_C = 0;
+        int sC;
         // 数组一的虚拟数组低位
-        int F_L = 0;
+        int fL = 0;
         // 数组一的虚拟数组的高位
-        int F_H = 2 * m;
-        while (F_L <= F_H) {
+        int fH = 2 * m;
+        while (fL <= fH) {
             // 数组一的"割"所在的位置
-            F_C = (F_L + F_H) / 2;
+            fC = (fL + fH) / 2;
             // 数组二的"割"所在的位置
-            S_C = m + n - F_C;
+            sC = m + n - fC;
             // 数组一的左元素
-            L_F = F_C == 0 ? Long.MIN_VALUE : first[(F_C - 1) / 2];
-            R_F = F_C == 2 * m ? Long.MAX_VALUE : first[F_C / 2];
-            L_S = S_C == 0 ? Long.MIN_VALUE : second[(S_C - 1) / 2];
-            R_S = S_C == 2 * n ? Long.MAX_VALUE : second[S_C / 2];
-            if (L_F > R_S) {
-                F_H = F_C - 1;
-            } else if (L_S > R_F) {
-                F_L = F_C + 1;
+            lF = fC == 0 ? Long.MIN_VALUE : first[(fC - 1) / 2];
+            rF = fC == 2 * m ? Long.MAX_VALUE : first[fC / 2];
+            lS = sC == 0 ? Long.MIN_VALUE : second[(sC - 1) / 2];
+            rS = sC == 2 * n ? Long.MAX_VALUE : second[sC / 2];
+            if (lF > rS) {
+                fH = fC - 1;
+            } else if (lS > rF) {
+                fL = fC + 1;
             } else {
                 break;
             }
         }
-        min = L_F < L_S ? L_S : L_F;
-        max = R_F < R_S ? R_F : R_S;
+        min = lF < lS ? lS : lF;
+        max = rF < rS ? rF : rS;
         return (min + max) / 2;
     }
 
@@ -117,18 +117,5 @@ public class ArrayUtils {
             builder.append(storeArray.get(i).toString());
         }
         return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println("正确答案:PAHNAPLSIIGYIR");
-        System.out.println("测试答案:" + transformSawtooth("PAYPALISHIRING", 3));
-        System.out.println("正确答案:PINALSIGYAHRPI");
-        System.out.println("测试答案:" + transformSawtooth("PAYPALISHIRING", 4));
-        System.out.println("正确答案:PHASIYIRPLIGAN");
-        System.out.println("测试答案:" + transformSawtooth("PAYPALISHIRING", 5));
-        System.out.println("正确答案:s");
-        System.out.println("测试答案:" + transformSawtooth("s", 5));
-        System.out.println("正确答案:AB");
-        System.out.println("测试答案:" + transformSawtooth("AB", 1));
     }
 }
